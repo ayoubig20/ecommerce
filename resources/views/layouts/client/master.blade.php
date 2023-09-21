@@ -7,7 +7,7 @@
     <meta name="keywords" content="Male_Fashion, unica, creative, html">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Male-Fashion | Template</title>
+    <title>GH STORE</title>
 
     <!-- Google Font -->
     <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@300;400;600;700;800;900&display=swap"
@@ -22,6 +22,7 @@
     <link rel="stylesheet" href="{{asset('client/css/owl.carousel.min.css')}}" type="text/css">
     <link rel="stylesheet" href="{{asset('client/css/slicknav.min.css')}}" type="text/css">
     <link rel="stylesheet" href="{{asset('client/css/style.css')}}" type="text/css">
+    <link rel="shortcut icon" href="{{asset('admin/images/store.png')}}" />
 </head>
 
 <body>
@@ -646,7 +647,7 @@
                             <a href="#"><img src="{{asset('client/img/footer-logo.png')}}" alt=""></a>
                         </div>
                         <p>The customer is at the heart of our unique business model, which includes design.</p>
-                        <a href="#"><img src="img/payment.png" alt=""></a>
+                        <a href="#"><img src="{{asset('client/img/payment.png')}}" alt=""></a>
                     </div>
                 </div>
                 <div class="col-lg-2 offset-lg-1 col-md-3 col-sm-6">
