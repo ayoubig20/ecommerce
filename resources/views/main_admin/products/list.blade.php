@@ -1,12 +1,25 @@
 @extends('layouts.admin.master')
+@section('css')
+    <style>
+        h1,
+        .c1 {
+            text-align: center;
+        }
 
+        .bt1 {
+            margin-left: 88%;
+            margin-bottom: 5%;
+        }
+    </style>
+@endsection
 @section('content')
-<div class="card col-lg-10 col-md-10 col-sm-10 mx-4 my-4">
-  <div class="card-header bg-dark"style="text-align: center;color:#F0FFFF">
-    Product List
-  </div>
-  <div class="card-body table-bordered"style="background-color:#F8F6F4">
-    <table class="table Secondary">
+<div class="card col-lg-11 col-md-11 col-sm-11">
+        <div class="card-header"style="text-align: center;">
+        <h5 class="card-title">products list</h5>
+        <div>
+    <div class="card-body">
+            
+        <table class="table table-bordered mp-0 table-striped table-vcenter border-top text-nowrap mr-5">
       <thead>
         <tr>
           <th>Product Name</th>
@@ -31,7 +44,10 @@
           </tr>
         @endforeach
       </tbody>
-    </table>
-  </div>
+     </table>
+
+    </div>
+
 </div>
 @endsection
+<!-- Row -->
