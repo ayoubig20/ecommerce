@@ -151,11 +151,11 @@
                     </div>
                     <div class="col-md-3 col-lg-4 col-sm-2">
                         <label class="form-label">images products</label>
-                        <input type="file" class="form-control" name="images[]"multiple>
+                        <input type="file" class="form-control" name="images[]"multiple id="image">
                     <div>
             </div><br><br><br>
             <div class="row">
-                    <div class="imagesection  col-md-10 col-lg-10 col-sm-10">
+                    <div class="col-md-6" id="previewContainer">
 
                     </div>
             </div>
@@ -166,30 +166,24 @@
     </form>
 </div>
     <script>
-                        // Get the imagesection div
-                        const imagesection = document.querySelector('.imagesection');
+  $(document).ready(function() {
+    $('#image').change(function(e) {
+        var files = e.target.files;
+        var previewContainer = $('#previewContainer');
+        previewContainer.empty(); // Clear previous previews
 
-                        // Get the images input field
-                        const imagesInput = document.querySelector('input[type="file"][name="images[]"]');
-
-                        // Create a function to display the selected images
-                        function displayImages(images) {
-                        // Clear the imagesection div
-                        imagesection.innerHTML = '';
-
-                        // Create a new image element for each selected image
-                        imagesInput.forEach(images => {
-                            const img = document.createElement('img');
-                            img.src = URL.createObjectURL(images);
-                            imagesection.appendChild(img);
-                        });
-                        }
-
-                        // Add an event listener to the images input field to call the displayImages function when images are selected
-                        imagesInput.addEventListener('change', () => {
-                        const images = imagesInput.files;
-                        displayImages(images);
-                        });
+        for (var i = 0; i < files.length; i++) {
+            var reader = new FileReader();
+            reader.onload = function(e) {
+                var imageSrc = e.target.result;
+                var imgElement = $('<img>').attr('src', imageSrc).css('width', '100px');
+                previewContainer.append(imgElement);
+            };
+            reader.readAsDataURL(files[i]);
+        }
+        previewContainer.css('display', 'flex');
+    });
+});
     </script>
 @endsection
 <!-- Row --> 
