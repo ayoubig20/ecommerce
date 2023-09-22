@@ -23,7 +23,7 @@ class CreateProductsTable extends Migration
             $table->string('Color_eng');
             $table->string('Material_eng');
             $table->string('Gender_eng');
-            $table->float('Price_eng');
+            $table->float('Price');
             $table->integer('Quantity');
             $table->string('Description_eng');
             $table->string('sku_eng');
@@ -35,7 +35,6 @@ class CreateProductsTable extends Migration
             $table->string('Color_ar');
             $table->string('Material_ar');
             $table->string('Gender_ar');
-            $table->float('Price_ar');
             $table->string('Description_ar');
             $table->string('sku_ar');
             $table->string('name_fr');
@@ -46,7 +45,6 @@ class CreateProductsTable extends Migration
             $table->string('Color_fr');
             $table->string('Material_fr');
             $table->string('Gender_fr');
-            $table->float('Price_fr');
             $table->string('Description_fr');
             $table->integer('Images');
             $table->string('sku_fr');

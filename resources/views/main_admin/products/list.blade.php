@@ -36,9 +36,9 @@
           <tr>
             <td>{{ $product->name_eng }}</td>
             <td>{{ $product->sku_eng }}</td>
-            <td>{{ $product->Price_eng }}</td>
+            <td>{{ $product->Price }}</td>
             <td>{{ $product->Category_eng }}</td>
-            <td>{{ $product->Brand_eng }}</td>
+            <td>{{ $product->Brand}}</td>
             <td>{{ $product->Color_eng }}</td>
             <td>{{ $product->Material_eng }}</td>
           </tr>
