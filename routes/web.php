@@ -23,7 +23,9 @@ Route::get('/admin/test', [AdminController::class,'index'])->name('admin');
 Route::get('/admin/productslist', [ProductController::class,'list'])->name('listprod');
 Route::get('/admin/showprod', [ProductController::class,'showprod'])->name('showprod');
 Route::post('/admin/addprod', [ProductController::class,'addprod'])->name('addprod');
+Route::get('/admin/showeditprod', [ProductController::class,'showeditprod'])->name('showeditprod');
 Route::post('/admin/modifyprod', [ProductController::class,'modifyprod'])->name('modifyprod');
+Route::post('/admin/modifyprodimgs', [ProductController::class,'modifyprodimgs'])->name('modifyprodimgs');
 
 
 

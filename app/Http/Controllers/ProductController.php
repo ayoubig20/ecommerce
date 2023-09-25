@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Product;
-
+use Illuminate\Support\Facades\Redirect;
 class ProductController extends Controller
 {
     public function list(){
@@ -78,16 +78,73 @@ class ProductController extends Controller
       ]);
       $image = $request->file('images');
       foreach ($image as $item) {
-        $name_gen = hexdec(uniqid()) . '.' . $item->getClientOriginalExtension();
-        Image::make($item)->resize(500, 500)->save('upload/annonces/' . $name_gen);
-        $save_url = 'upload/images/products' . $name_gen;
-        $images = $save_url;
+
+        $imageName = time() . '_' . $item->getClientOriginalName();
+        $image->storeAs('storage/images/', $imageName);
+        $save_url = 'upload/images/products' . $imageName;
         AnnonceImage::insert([
           'product_id' => $product_id,
-          'image' => $images,
+          'image' => $save_url,
           'created_at' => Carbon::now(),
         ]);
       }
       return Redirect::to("admin/productslist")->with('success', 'le produit est ajouté avec succes');
     }
+    public function showeditprod($id)
+    {
+      $products = product::find($id);
+      $productImages = product_images::where('product_id', $id)->get();
+      return view('main_admin.products.edit', compact('products', 'productImages'));
+    }
+    public function modifyprod(){
+      $product_id = $request->id;
+      product::findOrFail($product_id)->update([
+        'name_eng' => $request->Titre,
+        'Category_eng' => $request->type_id,
+        'Type_eng' => $request->id_promoteur,
+        'Brand' => $request->id_ville,
+        'Size' => $request->id_quartier,
+        'Color_eng' => $request->Adresse,
+        'Material_eng' => $request->extras,
+        'Gender_eng' => $request->Position,
+        'Price' => $request->surface,
+        'Quantity' => $request->nbr_chambres,
+        'Description_eng' => $request->prix,
+        'sku_eng' => $request->Status,
+        'name_ar' => $request->is_dispo,
+        'Category_ar' => $request->is_sponsorised,
+        'Type_ar' => $request->vues,
+        'Material_ar' => $request->vues,
+        'Gender_ar' => $request->vues,
+        'Description_ar' => $request->vues,
+        'sku_ar' => $request->vues,
+        'name_fr' => $request->vues,
+        'Category_fr' => $request->vues,
+        'Type_fr' => $request->vues,
+        'Color_fr' => $request->vues,
+        'Material_fr' => $request->vues,
+        'Gender_fr' => $request->vues,
+        'Description_fr' => $request->vues,
+        'sku_fr' => $request->vues,
+        'thumblnail_prod' => $request->vues,
+
+      ]);
+      return Redirect::to("admin/productslist")->with('success', 'le produit est modifier avec succes');
+    }
+    public function modifyprodimgs(Request $request)
+    {
+    $imgs = $request->images;
+    foreach ($imgs as $id => $img) {
+      $image = AnnonceImage::findOrfail($id);
+      unlink($image->image);
+      $imageName = time() . '_' . $item->getClientOriginalName();
+      $image->storeAs('storage/images/', $imageName);
+      $save_url = 'upload/images/products' . $imageName;
+      product_images::where('id', $id)->update([
+        'image' => $save_url,
+        'updated_at' => Carbon::now(),
+      ]);
+    }
+    return Redirect::to("admin/productslist")->with('success', 'les images sont modifiée avec succes');
+  }
 }

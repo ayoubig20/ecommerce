@@ -7,7 +7,7 @@
 
 @section('content')
 <div class="card col-lg-11 col-md-11 col-sm-11">
-    <form action="#" method="post" enctype="multipart/form-data">
+    <form action="{{route('addprod')}}" method="post" enctype="multipart/form-data">
         @csrf
         <div class="card-header">
             <div class="card-title">ADD PRODUCTS</div>

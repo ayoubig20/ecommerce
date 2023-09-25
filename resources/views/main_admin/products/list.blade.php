@@ -27,8 +27,8 @@
           <th>Price</th>
           <th>Category</th>
           <th>brand</th>
-          <th>Color</th>
           <th>Material</th>
+          <th>actions</th>
         </tr>
       </thead>
       <tbody>
@@ -39,8 +39,8 @@
             <td>{{ $product->Price }}</td>
             <td>{{ $product->Category_eng }}</td>
             <td>{{ $product->Brand}}</td>
-            <td>{{ $product->Color_eng }}</td>
             <td>{{ $product->Material_eng }}</td>
+            <td><a href=""> <i class="menu-icon mdi mdi-eye"></i></a><a href=""> <i class="menu-icon mdi mdi-delete"></i></a></td>
           </tr>
         @endforeach
       </tbody>
