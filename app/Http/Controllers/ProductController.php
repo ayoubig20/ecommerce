@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Product;
+use App\Product_images;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Redirect;
 class ProductController extends Controller
 {
@@ -15,6 +17,7 @@ class ProductController extends Controller
         return view('main_admin.products.add');
     }
     public function addprod(Request $request){
+      // dd($request->all());
     $validated = $request->validate([
         'name_eng' => 'required',
         'Category_eng' => 'required',
@@ -45,44 +48,47 @@ class ProductController extends Controller
         'Description_fr' => 'required',
         'sku_fr' => 'required',
         'thumblnail_prod' => 'required',
+        'images' => 'required',
       ]);
       $product_id = product::insertGetId([
-        'name_eng' => $request->Titre,
-        'Category_eng' => $request->type_id,
-        'Type_eng' => $request->id_promoteur,
-        'Brand' => $request->id_ville,
-        'Size' => $request->id_quartier,
-        'Color_eng' => $request->Adresse,
-        'Material_eng' => $request->extras,
-        'Gender_eng' => $request->Position,
-        'Price' => $request->surface,
-        'Quantity' => $request->nbr_chambres,
-        'Description_eng' => $request->prix,
-        'sku_eng' => $request->Status,
-        'name_ar' => $request->is_dispo,
-        'Category_ar' => $request->is_sponsorised,
-        'Type_ar' => $request->vues,
-        'Material_ar' => $request->vues,
-        'Gender_ar' => $request->vues,
-        'Description_ar' => $request->vues,
-        'sku_ar' => $request->vues,
-        'name_fr' => $request->vues,
-        'Category_fr' => $request->vues,
-        'Type_fr' => $request->vues,
-        'Color_fr' => $request->vues,
-        'Material_fr' => $request->vues,
-        'Gender_fr' => $request->vues,
-        'Description_fr' => $request->vues,
-        'sku_fr' => $request->vues,
-        'thumblnail_prod' => $request->vues,
+        'name_eng' => $request->name_eng,
+        'Category_eng' => $request->Category_eng,
+        'Type_eng' => $request->Type_eng,
+        'Brand' => $request->Brand,
+        'Size' => $request->Size,
+        'Color_eng' => $request->Color_eng,
+        'Material_eng' => $request->Material_eng,
+        'Gender_eng' => $request->Gender_eng,
+        'Price' => $request->Price,
+        'Quantity' => $request->Quantity,
+        'Description_eng' => $request->Description_eng,
+        'sku_eng' => $request->sku_eng,
+        'name_ar' => $request->name_ar,
+        'Category_ar' => $request->Category_ar,
+        'Type_ar' => $request->Type_ar,
+        'Color_ar' => $request->Color_ar,
+        'Material_ar' => $request->Material_ar,
+        'Gender_ar' => $request->Gender_ar,
+        'Description_ar' => $request->Description_ar,
+        'sku_ar' => $request->sku_ar,
+        'name_fr' => $request->name_fr,
+        'Category_fr' => $request->Category_fr,
+        'Type_fr' => $request->Type_fr,
+        'Color_fr' => $request->Color_fr,
+        'Material_fr' => $request->Material_fr,
+        'Gender_fr' => $request->Gender_fr,
+        'Description_fr' => $request->Description_fr,
+        'sku_fr' => $request->sku_fr,
+        'thumblnail_prod' => $request->file('thumblnail_prod'),
+        'images' =>count($request->file('images')),
       ]);
       $image = $request->file('images');
       foreach ($image as $item) {
 
         $imageName = time() . '_' . $item->getClientOriginalName();
-        $image->storeAs('storage/images/', $imageName);
+        $item->storeAs('storage/images/', $imageName);
         $save_url = 'upload/images/products' . $imageName;
-        AnnonceImage::insert([
+        product_images::insert([
           'product_id' => $product_id,
           'image' => $save_url,
           'created_at' => Carbon::now(),
@@ -99,46 +105,47 @@ class ProductController extends Controller
     public function modifyprod(){
       $product_id = $request->id;
       product::findOrFail($product_id)->update([
-        'name_eng' => $request->Titre,
-        'Category_eng' => $request->type_id,
-        'Type_eng' => $request->id_promoteur,
-        'Brand' => $request->id_ville,
-        'Size' => $request->id_quartier,
-        'Color_eng' => $request->Adresse,
-        'Material_eng' => $request->extras,
-        'Gender_eng' => $request->Position,
-        'Price' => $request->surface,
-        'Quantity' => $request->nbr_chambres,
-        'Description_eng' => $request->prix,
-        'sku_eng' => $request->Status,
-        'name_ar' => $request->is_dispo,
-        'Category_ar' => $request->is_sponsorised,
-        'Type_ar' => $request->vues,
-        'Material_ar' => $request->vues,
-        'Gender_ar' => $request->vues,
-        'Description_ar' => $request->vues,
-        'sku_ar' => $request->vues,
-        'name_fr' => $request->vues,
-        'Category_fr' => $request->vues,
-        'Type_fr' => $request->vues,
-        'Color_fr' => $request->vues,
-        'Material_fr' => $request->vues,
-        'Gender_fr' => $request->vues,
-        'Description_fr' => $request->vues,
-        'sku_fr' => $request->vues,
-        'thumblnail_prod' => $request->vues,
+        'name_eng' => $request->name_eng,
+        'Category_eng' => $request->Category_eng,
+        'Type_eng' => $request->Type_eng,
+        'Brand' => $request->Brand,
+        'Size' => $request->Size,
+        'Color_eng' => $request->Color_eng,
+        'Material_eng' => $request->Material_eng,
+        'Gender_eng' => $request->Gender_eng,
+        'Price' => $request->Price,
+        'Quantity' => $request->Quantity,
+        'Description_eng' => $request->Description_eng,
+        'sku_eng' => $request->sku_eng,
+        'name_ar' => $request->name_ar,
+        'Category_ar' => $request->Category_ar,
+        'Type_ar' => $request->Type_ar,
+        'Color_ar' => $request->Color_ar,
+        'Material_ar' => $request->Material_ar,
+        'Gender_ar' => $request->Gender_ar,
+        'Description_ar' => $request->Description_ar,
+        'sku_ar' => $request->sku_ar,
+        'name_fr' => $request->name_fr,
+        'Category_fr' => $request->Category_fr,
+        'Type_fr' => $request->Type_fr,
+        'Color_fr' => $request->Color_fr,
+        'Material_fr' => $request->Material_fr,
+        'Gender_fr' => $request->Gender_fr,
+        'Description_fr' => $request->Description_fr,
+        'sku_fr' => $request->sku_fr,
+        'thumblnail_prod' => $request->file('thumblnail_prod'),
 
       ]);
-      return Redirect::to("admin/productslist")->with('success', 'le produit est modifier avec succes');
+      return Redirect::to("admin/productslist")->with('success', 'le produit est modifié avec succes');
     }
     public function modifyprodimgs(Request $request)
     {
     $imgs = $request->images;
     foreach ($imgs as $id => $img) {
-      $image = AnnonceImage::findOrfail($id);
+      $image = product_images::findOrfail($id);
       unlink($image->image);
-      $imageName = time() . '_' . $item->getClientOriginalName();
-      $image->storeAs('storage/images/', $imageName);
+      $imageName = time() . '_' . $img->getClientOriginalName();
+      $img->storeAs('storage/images/', $imageName);
       $save_url = 'upload/images/products' . $imageName;
       product_images::where('id', $id)->update([
         'image' => $save_url,
@@ -146,5 +153,24 @@ class ProductController extends Controller
       ]);
     }
     return Redirect::to("admin/productslist")->with('success', 'les images sont modifiée avec succes');
+  }
+  public function  deleteproduct($id)
+  {
+    $products = product::findOrFail($id);
+    $images = product_images::where('product_id', $products)->get();
+    foreach ($images as $imgs) {
+      unlink($imgs->image);
+      product_images::findOrfail($imgs)->delete();
+    }
+    product::findOrFail($id)->delete();
+    return Redirect::to("admin/productslist")->with('success', 'le produit est supprimé avec succes');
+  }
+  public function deleteImages($id)
+  {
+    $oldimg = product_images::findOrFail($id);
+    unlink($oldimg->image);
+    product_images::findOrFail($id)->delete();
+
+    return Redirect::to("admin/productslist")->with('success', 'les images sont supprimé avec succes');
   }
 }

@@ -40,7 +40,10 @@
             <td>{{ $product->Category_eng }}</td>
             <td>{{ $product->Brand}}</td>
             <td>{{ $product->Material_eng }}</td>
-            <td><a href=""> <i class="menu-icon mdi mdi-eye"></i></a><a href=""> <i class="menu-icon mdi mdi-delete"></i></a></td>
+            <td>
+               <a href="{{url('/admin/showeditprod/'.$product->id)}}"> <i class="menu-icon mdi mdi-eye"></i>
+               <a href=""><i class="menu-icon mdi mdi-delete"></i></a>
+            </td>
           </tr>
         @endforeach
       </tbody>

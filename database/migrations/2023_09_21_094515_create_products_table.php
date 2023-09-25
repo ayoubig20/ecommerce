@@ -30,7 +30,7 @@ class CreateProductsTable extends Migration
             $table->string('name_ar');
             $table->string('Category_ar');
             $table->string('Type_ar');
-            $table->string('Color');
+            $table->string('Color_ar');
             $table->string('Material_ar');
             $table->string('Gender_ar');
             $table->string('Description_ar');
