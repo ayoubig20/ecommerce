@@ -26,6 +26,7 @@ Route::post('/admin/addprod', [ProductController::class,'addprod'])->name('addpr
 Route::get('/admin/showeditprod/{id}', [ProductController::class,'showeditprod'])->name('showeditprod');
 Route::post('/admin/modifyprod', [ProductController::class,'modifyprod'])->name('modifyprod');
 Route::post('/admin/modifyprodimgs', [ProductController::class,'modifyprodimgs'])->name('modifyprodimgs');
+Route::post('/admin/imagesdelete/{id}', [ProductController::class,'imagesdelete'])->name('imagesdelete');
 
 
 

@@ -50,6 +50,9 @@ class ProductController extends Controller
         'thumblnail_prod' => 'required',
         'images' => 'required',
       ]);
+      $imageName = time() . '_' . $item->getClientOriginalName();
+      $item->storeAs('storage/images/thumblnails', $imageName);
+      $save_url = 'storage/images/thumblnails' . $imageName;
       $product_id = product::insertGetId([
         'name_eng' => $request->name_eng,
         'Category_eng' => $request->Category_eng,
@@ -79,7 +82,7 @@ class ProductController extends Controller
         'Gender_fr' => $request->Gender_fr,
         'Description_fr' => $request->Description_fr,
         'sku_fr' => $request->sku_fr,
-        'thumblnail_prod' => $request->file('thumblnail_prod'),
+        'thumblnail_prod' =>$save_url,
         'images' =>count($request->file('images')),
       ]);
       $image = $request->file('images');
@@ -87,7 +90,7 @@ class ProductController extends Controller
 
         $imageName = time() . '_' . $item->getClientOriginalName();
         $item->storeAs('storage/images/', $imageName);
-        $save_url = 'upload/images/products' . $imageName;
+        $save_url = 'storage/images/' . $imageName;
         product_images::insert([
           'product_id' => $product_id,
           'image' => $save_url,
@@ -102,7 +105,46 @@ class ProductController extends Controller
       $productImages = product_images::where('product_id', $id)->get();
       return view('main_admin.products.edit', compact('products', 'productImages'));
     }
-    public function modifyprod(){
+    public function modifyprod(Request $request){
+      if($request->file('thumblnail_prod')){
+        $imageName = time() . '_' . $item->getClientOriginalName();
+        $item->storeAs('storage/images/thumblnails', $imageName);
+        $save_url = 'storage/images/thumblnails' . $imageName;
+        $product_id = $request->id;
+        product::findOrFail($product_id)->update([
+        'name_eng' => $request->name_eng,
+        'Category_eng' => $request->Category_eng,
+        'Type_eng' => $request->Type_eng,
+        'Brand' => $request->Brand,
+        'Size' => $request->Size,
+        'Color_eng' => $request->Color_eng,
+        'Material_eng' => $request->Material_eng,
+        'Gender_eng' => $request->Gender_eng,
+        'Price' => $request->Price,
+        'Quantity' => $request->Quantity,
+        'Description_eng' => $request->Description_eng,
+        'sku_eng' => $request->sku_eng,
+        'name_ar' => $request->name_ar,
+        'Category_ar' => $request->Category_ar,
+        'Type_ar' => $request->Type_ar,
+        'Color_ar' => $request->Color_ar,
+        'Material_ar' => $request->Material_ar,
+        'Gender_ar' => $request->Gender_ar,
+        'Description_ar' => $request->Description_ar,
+        'sku_ar' => $request->sku_ar,
+        'name_fr' => $request->name_fr,
+        'Category_fr' => $request->Category_fr,
+        'Type_fr' => $request->Type_fr,
+        'Color_fr' => $request->Color_fr,
+        'Material_fr' => $request->Material_fr,
+        'Gender_fr' => $request->Gender_fr,
+        'Description_fr' => $request->Description_fr,
+        'sku_fr' => $request->sku_fr,
+        'thumblnail_prod' =>$save_url,
+      ]);
+    }
+    else
+    {
       $product_id = $request->id;
       product::findOrFail($product_id)->update([
         'name_eng' => $request->name_eng,
@@ -133,9 +175,8 @@ class ProductController extends Controller
         'Gender_fr' => $request->Gender_fr,
         'Description_fr' => $request->Description_fr,
         'sku_fr' => $request->sku_fr,
-        'thumblnail_prod' => $request->file('thumblnail_prod'),
-
       ]);
+    }
       return Redirect::to("admin/productslist")->with('success', 'le produit est modifié avec succes');
     }
     public function modifyprodimgs(Request $request)
@@ -165,7 +206,7 @@ class ProductController extends Controller
     product::findOrFail($id)->delete();
     return Redirect::to("admin/productslist")->with('success', 'le produit est supprimé avec succes');
   }
-  public function deleteImages($id)
+  public function imagesdelete($id)
   {
     $oldimg = product_images::findOrFail($id);
     unlink($oldimg->image);

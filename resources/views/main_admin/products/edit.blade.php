@@ -9,6 +9,7 @@
 <div class="card col-lg-11 col-md-11 col-sm-11">
     <form action="{{route('modifyprod')}}" method="post" enctype="multipart/form-data">
         @csrf
+        <input type="hidden" name="id" value="{{ $products->id }}">
         <div class="card-header">
             <div class="card-title">Edit PRODUCTS</div>
             
@@ -246,7 +247,7 @@
             </div><br><br><br>
             <div class="row">
                     <div class="col-md-6" id="previewContainer">
-
+                    <img src="{{asset($products->image)}}" class="card-img-top" style="width:330px; height:150px;">
                     </div>
             </div>
         </div>
@@ -254,6 +255,43 @@
             <input type="submit" class="btn btn-rounded btn-primary" value="add product">
         </div>
     </form>
+</div>
+<div class="card col-md-12 col-sm-12 mt-5">
+    <div class="card-header">
+        <div class="card-title">Edite images products</div>
+    </div>
+    <div class="card-body">
+        <form action="{{route('modifyprodimgs')}}" method="post" enctype="multipart/form-data">
+            @csrf
+            <div class="row row-sm">
+                @foreach($productImages as $imgs)
+                <div>
+                    <div class=" card col-md-12">
+                        <img src="{{asset($imgs->image)}}" class="card-img-top" style="width:330px; height:150px;">
+                        <br>
+                        <div class=" row justify-content-center">
+                            <h5 class="col-md-3 ">
+                                <a href=" {{route('imagesdelete',$imgs->id)}}" class="btn btn-sm btn-danger"
+                                    title="delete image"><i class="fa fa-trash"></i></a>
+                            </h5>
+                        </div>
+                        <div class="card-body">
+                            <div class="col-md-12">
+                                <input type="file" class="custom-file-input" name="images[{{$imgs->id}}]">
+                                <label class="custom-file-label" for="images[{{$imgs->id}}]">Choisire Images</label>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                @endforeach
+            </div>
+            <div class="text-xs-right">
+                <input type="submit" class="btn btn-rounded btn-primary mb-5" value="modifier image">
+            </div>
+        </form>
+
+    </div>
 </div>
 @endsection
 <!-- Row --> 
