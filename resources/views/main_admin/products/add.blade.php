@@ -254,6 +254,9 @@
             <input type="submit" class="btn btn-rounded btn-primary" value="add product">
         </div>
     </form>
+<div id="app">
+ {{ message }}
+</div>
 </div>
     <script>
   $(document).ready(function() {
@@ -273,6 +276,12 @@
         }
         previewContainer.css('display', 'flex');
     });
+});
+new Vue({
+ el: '#app',
+ data: {
+ message: 'you made vuejs running !'
+ }
 });
     </script>
 @endsection

@@ -209,6 +209,7 @@
   <!-- Custom js for this page-->
   <script src="{{asset('admin/js/dashboard.js')}}"></script>
   <script src="{{asset('admin/js/Chart.roundedBarCharts.js')}}"></script>
+  <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
   <!-- End custom js for this page-->
 
 
