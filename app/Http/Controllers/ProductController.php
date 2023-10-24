@@ -7,6 +7,7 @@ use App\Product;
 use App\Product_images;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Redirect;
+use Image;
 class ProductController extends Controller
 {
     public function list(){
@@ -50,9 +51,10 @@ class ProductController extends Controller
         'thumblnail_prod' => 'required',
         'images' => 'required',
       ]);
+      $item = $request->file('thumblnail_prod');
       $imageName = time() . '_' . $item->getClientOriginalName();
-      $item->storeAs('storage/images/thumblnails', $imageName);
-      $save_url = 'storage/images/thumblnails' . $imageName;
+      $item->storeAs('public/images/thumbnails/', $imageName);
+      $save_url = 'public/images/thumbnails/' . $imageName;
       $product_id = product::insertGetId([
         'name_eng' => $request->name_eng,
         'Category_eng' => $request->Category_eng,
@@ -87,13 +89,13 @@ class ProductController extends Controller
       ]);
       $image = $request->file('images');
       foreach ($image as $item) {
-
-        $imageName = time() . '_' . $item->getClientOriginalName();
-        $item->storeAs('storage/images/', $imageName);
-        $save_url = 'storage/images/' . $imageName;
-        product_images::insert([
+        $name_gen = hexdec(uniqid()) . '.' . $item->getClientOriginalExtension();
+        Image::make($item)->resize(500, 500)->save('public/images/products/' . $name_gen);
+        $save_url = 'public/images/products/' . $name_gen;
+        $images = $save_url;
+        Product_images::insert([
           'product_id' => $product_id,
-          'image' => $save_url,
+          'image' => $images,
           'created_at' => Carbon::now(),
         ]);
       }
@@ -108,8 +110,8 @@ class ProductController extends Controller
     public function modifyprod(Request $request){
       if($request->file('thumblnail_prod')){
         $imageName = time() . '_' . $item->getClientOriginalName();
-        $item->storeAs('storage/images/thumblnails', $imageName);
-        $save_url = 'storage/images/thumblnails' . $imageName;
+        $item->storeAs('public/images/thumbnails/', $imageName);
+        $save_url = 'public/images/thumbnails/' . $imageName;
         $product_id = $request->id;
         product::findOrFail($product_id)->update([
         'name_eng' => $request->name_eng,
@@ -185,11 +187,11 @@ class ProductController extends Controller
     foreach ($imgs as $id => $img) {
       $image = product_images::findOrfail($id);
       unlink($image->image);
-      $imageName = time() . '_' . $img->getClientOriginalName();
-      $img->storeAs('storage/images/', $imageName);
-      $save_url = 'upload/images/products' . $imageName;
+      $make_gen = hexdec(uniqid()) . '.' . $img->getClientOriginalExtension();
+      Image::make($img)->resize(500, 500)->save('public/images/products/' . $make_gen);
+      $save = 'public/images/products/' . $make_gen;
       product_images::where('id', $id)->update([
-        'image' => $save_url,
+        'image' => $save,
         'updated_at' => Carbon::now(),
       ]);
     }
